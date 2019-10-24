@@ -1,0 +1,55 @@
+#infoblock{
+    width: 300px;
+    height: 200px;
+    border: solid 1px black;
+    margin: auto;
+    clear: both;
+    padding: 5px;
+    overflow: auto;
+    /* text-align-last: center; */
+}
+
+
+.votediv{
+    height: 130px;
+    width: 100px; 
+    margin: 5px;
+    text-align: center;
+    float: left;
+}
+
+.speaker{
+    height: 130px;
+    width: 100px; 
+    margin: 5px;
+    text-align: center;
+    margin: auto;
+}
+
+.firstrow{
+    width: 1008px;
+    height: 140px;
+    margin: auto;
+}
+
+img{
+    height: 100px;
+    width: 100px;
+    margin-top: 5px;
+}
+
+.checkbox{
+    height: 20px;
+    width: 20px;
+    border: 1px solid black;
+    margin: auto;
+}
+
+button{
+    margin-left: 440px;
+    margin-top: 5px;
+}
+
+#verdict{
+    margin-left: 25%;
+}
