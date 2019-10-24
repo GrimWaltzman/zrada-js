@@ -53,3 +53,19 @@ button{
 #verdict{
     margin-left: 25%;
 }
+
+div[data-vote='none']{
+    background-color: white;
+}
+
+div[data-vote='for']{
+    background-color: green;
+}
+
+div[data-vote='against']{
+    background-color: red;
+}
+
+div[data-vote='abstained']{
+    background-color: yellow;
+}
