@@ -1,5 +1,5 @@
-from .views import *
-from .auth.views import *
+from views import *
+from auth.views import *
 
 def import_urls(app: web.Application):
     app.add_routes([web.get('/', handler_root, name="index"),
