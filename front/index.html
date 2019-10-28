@@ -4,68 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Z.R.A.D.A</title>
-    <link rel="stylesheet" type="text/css" href="static/styles.css">
+    <title>ZRADA System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="speaker">
-        <div class="checkbox" data-vote='none'></div>
-        <img src="avatars/avatar_boss.jpg" alt="BossOfTheGym">
-    </div>
-<div class="firstrow">
-    <div class="votediv">
-        <div class="checkbox" data-vote='none'></div>
-        <img src="avatars/avatar_agbw.jpg" alt="AGBW" srcset=""> 
-    </div>
-
-    <div class="votediv">
-        <div class="checkbox" data-vote='none'></div>    
-        <img src="avatars/avatar_bichashka.jpg" alt="Bichashka" srcset="">
-    </div>
-
-    <div class="votediv">
-        <div class="checkbox" data-vote='none'></div>
-        <img src="avatars/avatar_ebin.jpg" alt="Ebin" srcset="">
-    </div>
-
-    <div class="votediv">
-        <div class="checkbox" data-vote='none'></div>
-        <img src="avatars/avatar_drovenyakaa.jpg" alt="drovenyakaa" srcset="">
-    </div>
-
-    <div class="votediv">
-        <div class="checkbox"  data-vote='none'></div>
-        <img src="avatars/avatar_ldj.jpg" alt="LDJ" srcset="">
-    </div>
-
-    <div class="votediv">
-        <div class="checkbox" data-vote='none'></div>
-        <img src="avatars/avatar_quppeq.jpg" alt="quppeq" srcset="">
-    </div>
-
-    <div class="votediv">
-        <div class="checkbox" data-vote='none'></div>
-        <img src="avatars/avatar_rgb.jpg" alt="RGB" srcset="">
-    </div>
-
-    <div class="votediv">
-        <div class="checkbox" data-vote='none'></div>
-        <img src="avatars/avatar_solaris.jpg" alt="Solaris" srcset="">
-    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="checkbox mx-auto" data-vote='none'></div>
+                <img class="mx-auto d-block" src="avatars/avatar_boss.jpg" alt="BossOfTheGym">
+            </div>
+            <div class="row justify-content-around">
+                <div class="col">
+                    <div class="checkbox mx-auto" data-vote='none'></div>
+                    <img class="d-block mx-auto" src="avatars/avatar_agbw.jpg" alt="AGBW" srcset=""> 
+                </div>
+                <div class="col">
+                    <div class="checkbox mx-auto" data-vote='none'></div>    
+                    <img class="d-block mx-auto" src="avatars/avatar_bichashka.jpg" alt="Bichashka" srcset="">
+                </div>
+                <div class="col">
+                    <div class="checkbox mx-auto" data-vote='none'></div>
+                    <img class="d-block mx-auto" class="mx-auto" src="avatars/avatar_ebin.jpg" alt="Ebin" srcset="">
+                </div>
+                <div class="col">
+                    <div class="checkbox mx-auto" data-vote='none'></div>
+                    <img class="d-block mx-auto" src="avatars/avatar_drovenyakaa.jpg" alt="drovenyakaa" srcset="">
+                </div>
+                <div class="col">
+                    <div class="checkbox mx-auto"  data-vote='none'></div>
+                    <img class="d-block mx-auto" src="avatars/avatar_ldj.jpg" alt="LDJ" srcset="">
+                </div>
+                <div class="col">
+                    <div class="checkbox mx-auto" data-vote='none'></div>
+                    <img class="d-block mx-auto" src="avatars/avatar_quppeq.jpg" alt="quppeq" srcset="">
+                </div>
+                <div class="col">
+                    <div class="checkbox mx-auto" data-vote='none'></div>
+                    <img class="d-block mx-auto" src="avatars/avatar_rgb.jpg" alt="RGB" srcset="">
+                </div>
+                <div class="col">
+                    <div class="checkbox mx-auto" data-vote='none'></div>
+                    <img class="d-block mx-auto" src="avatars/avatar_solaris.jpg" alt="Solaris" srcset="">
+                </div>
+                <div class="col">
+                    <div class="checkbox mx-auto" data-vote='none'></div>
+                    <img class="d-block mx-auto" src="avatars/avatar_ThomasFalcone.jpg" alt="Thomas Falcone" srcset="">
+                </div>
+            </div>
+        </div>
+    </div> 
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-3 info-col text-align-center">
+                <p id="pro" class="d-block"></p>
+                <p id="con" class="d-block"></p>
+                <p id="ind" class="d-block"></p>
+                <p id="verdict" class="d-block mx-auto"></p>
+                <button id="count" class="d-block mx-auto">Підрахувати голоси</button>
+            </div>
+        </div>
+    </div> 
     
-    <div class="votediv">
-        <div class="checkbox" data-vote='none'></div>
-        <img src="avatars/avatar_ThomasFalcone.jpg" alt="Thomas Falcone" srcset="">
-    </div>
-    <div id="infoblock">
-        <p id="pro"></p>
-        <p id="con"></p>
-        <p id="ind"></p>
-        <p id="verdict"></p>
-    </div>
-    <button id="count">Порахувати голоси</button>
-
-    <script src="static/voteHandler.js" type="text/javascript"></script>
-</div>
+    <script src="voteHandler.js"></script>
 </body>
 </html>

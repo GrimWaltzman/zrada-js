@@ -1,0 +1,40 @@
+img{
+    height: 100px;
+    width: 100px;
+    margin-top: 5px;
+}
+
+.checkbox{
+    height: 20px;
+    width: 20px;
+    border: 3px solid black;
+}
+
+
+div[data-vote='none']{
+    background-color: white;
+}
+
+div[data-vote='for']{
+    background-color: green;
+}
+
+div[data-vote='against']{
+    background-color: red;
+}
+
+div[data-vote='abstained']{
+    background-color: yellow;
+}
+.col{
+    margin-top: 5px;
+}
+.container{
+    margin-top: 5px;
+}
+
+.info-col{
+    border: 1px solid black;
+    padding-bottom: 5px;
+    min-width: 285px;
+}
