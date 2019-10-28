@@ -1,11 +1,9 @@
 FROM python:3.7
 
-RUN pip install aiohttp
-RUN pip install aiohttp_jinja2
-RUN pip install jinja2
-
-
 RUN mkdir /app
+
+COPY requirements.txt /home/docker/code/app/
+RUN pip3.7 install -r /home/docker/code/app/requirements.txt
 
 ADD . /app
 

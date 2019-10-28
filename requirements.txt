@@ -1,0 +1,9 @@
+aiohttp
+aiohttp_security
+aiohttp_session
+aiohttp_jinja2
+
+jinja2
+motor
+dnspython
+passlib
