@@ -6,9 +6,9 @@ import aiohttp_jinja2
 import jinja2
 from aiohttp_session import SimpleCookieStorage, session_middleware
 from aiohttp_security import setup as setup_security, SessionIdentityPolicy
-from back.auth.views import SimpleJack_AuthorizationPolicy
+from .auth.views import SimpleJack_AuthorizationPolicy
 from pathlib import Path
-from back.urls import import_urls
+from .urls import import_urls
 from motor.motor_asyncio import AsyncIOMotorClient
 
 loop = asyncio.get_event_loop()
