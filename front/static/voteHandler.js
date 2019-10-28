@@ -4,10 +4,10 @@ var box = document.getElementById('infoblock');
 var yes = 0;
 var no = 0;
 var abs = 0;
-var boxes = document.getElementsByClassName('checkbox');
+var boxes = document.getElementsByClassName('checkbox mx-auto');
 
 document.body.addEventListener('click', function(e){
-    if(e.target.getAttribute('class')=='checkbox'){
+    if(e.target.getAttribute('class')=='checkbox mx-auto'){
         switch(e.target.getAttribute('data-vote')){
             case 'none':
                 e.target.setAttribute('data-vote', 'for');
