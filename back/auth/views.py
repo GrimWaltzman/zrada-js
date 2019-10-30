@@ -7,6 +7,7 @@ from aiohttp_security.abc import AbstractAuthorizationPolicy
 from passlib.hash import sha256_crypt
 import aiohttp_jinja2
 import jinja2
+import hashlib
 
 class SimpleJack_AuthorizationPolicy(AbstractAuthorizationPolicy):
 
@@ -30,7 +31,7 @@ class SimpleJack_AuthorizationPolicy(AbstractAuthorizationPolicy):
         print(identity)
         if identity:
             return await self.collection.find_one({"login": identity})
-        return identity == 'jack' and permission in ('listen',)
+        # return identity == 'jack' and permission in ('listen',)
 
 async def check_credentials(db, username, password):
 
@@ -43,13 +44,12 @@ async def check_credentials(db, username, password):
 
 @aiohttp_jinja2.template('/front/login.html')
 async def handler_login(request):
+
     if request.method == "POST":
         redirect_response = web.HTTPFound('/')
         form = await request.post()
-        print(form)
         login = form.get('login')
         password = form.get('password')
-        print(login)
         db_engine = request.app.db
         if await check_credentials(db_engine, login, password):
             await remember(request, redirect_response, login)
@@ -58,15 +58,19 @@ async def handler_login(request):
             body='Invalid username/password combination')
     return {}
 
+@aiohttp_jinja2.template("/front/signin.html")
 async def handler_signin(request):
-    redirect_response = web.HTTPFound('/')
-    form = await request.post()
-    db = request.app.db
-    login = form.get('login')
-    password = form.get('password')
-    hash = sha256_crypt.hash(password)
-    await db.collection.insert({"login": login, "password": hash})
-    raise redirect_response
+    if request.method == "POST":
+        redirect_response = web.HTTPFound('/')
+        form = await request.post()
+        db = request.app.db
+        login = form.get('login')
+        password = form.get('password')
+        hash = sha256_crypt.hash(password)
+        await db["users"].insert_one({"login": login, "password": hash})
+        raise redirect_response
+    return {}
+
 
 
 

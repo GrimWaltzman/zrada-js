@@ -11,6 +11,12 @@ from pathlib import Path
 from urls import import_urls
 from motor.motor_asyncio import AsyncIOMotorClient
 
+DEBUG = getenv("debug", True)
+if str(DEBUG).lower() == "false":
+    DEBUG = False
+
+
+
 loop = asyncio.get_event_loop()
 
 async def db_handler(app, handler):
@@ -33,11 +39,15 @@ MONGO_CONNECT = MONGO_TEMPLATE.format(MONGO_PASSWORD)
 
 
 
+
 middleware = session_middleware(SimpleCookieStorage())
 policy = SessionIdentityPolicy()
 
 app = web.Application(middlewares=[middleware,
                                    db_handler])
+
+if DEBUG:
+    app.add_routes([web.static('/static', str(HERE) + "/front/static", show_index=True)])
 
 app.client = AsyncIOMotorClient(MONGO_CONNECT)
 app.db = app.client["zrada"]
