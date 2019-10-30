@@ -19,17 +19,17 @@ document.getElementById('saver').onclick = function (){
     archive(zp);
 }
 
-// function archive(obj){
-//     var xhr = new XMLHttpRequest();
-//     xhr.open("POST", savehandler.py , true); //Замість savehandler.py має бути адреса скрипта який буде зберігати ЗП
+function archive(obj){
+     var xhr = new XMLHttpRequest();
+     xhr.open("POST", savehandler.py , true); //Замість savehandler.py має бути адреса скрипта який буде зберігати ЗП
 
-//     xhr.onreadystatechange = function () {
-//         if (xhr.readyState == 4) {
-//             if (xhr.status == 200) { 
-//                 document.getElementById("output").innerHTML += xhr.responseText;
-//             }
-//         }
-//     }
+     xhr.onreadystatechange = function () {
+         if (xhr.readyState == 4) {
+             if (xhr.status == 200) { 
+                 document.getElementById("output").innerHTML += xhr.responseText;
+             }
+         }
+     }
 
-//     xhr.send(obj);
-// }
+     xhr.send(obj);
+ }
