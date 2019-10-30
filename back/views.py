@@ -44,9 +44,8 @@ async def insert_law(request):
     if request.method == "POST":
         db = request.app.db
         session = await get_session(request)
-        form = await request.post()
+        form = await request.json()
 
-        print(form)
         title = form.get("title")
         body = form.get("body")
         author = form.get("author")
@@ -61,5 +60,15 @@ async def insert_law(request):
                                      "date":date,
                                      "date_in_base":date_in_base,
                                      "editor":editor})
-        raise redirect_response
+        raise web.HTTPOk(body="Законопроект успішно внесено в базу!")
     return {}
+
+
+@aiohttp_jinja2.template("/front/list_of_laws.html")
+async def view_laws(request):
+    await check_permission(request, "view")
+    db = request.app.db
+    laws = []
+    async for law in db["laws"].find():
+        laws.append(law)
+    return {"laws":laws}

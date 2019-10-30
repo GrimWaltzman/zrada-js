@@ -10,18 +10,18 @@ document.getElementById('saver').onclick = function (){
 
     zp.id = number.value;
     zp.title = title.value;
-    zp.body = body.value
-    zp.author = author.value
+    zp.body = body.value;
+    zp.author = author.value;
     zp.date = date.value;   
 
     archive(zp);
 }
 
 function archive(obj){
-    // var stringy = JSON.stringify(obj);
+    var stringy = JSON.stringify(obj);
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", savehandler.py , true); //Замість savehandler.py має бути адреса скрипта який буде зберігати ЗП
+    xhr.open("POST", "/insert_law" , true); //Замість savehandler.py має бути адреса скрипта який буде зберігати ЗП
     xhr.setRequestHeader('Content-Type', 'application/json' )
 
     xhr.onreadystatechange = function () {
@@ -31,5 +31,5 @@ function archive(obj){
             }
         }
     }
-    xhr.send(obj);
+    xhr.send(stringy);
 }
