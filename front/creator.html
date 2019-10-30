@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Реєстратор законопроектів</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body{
+            min-width: 768px;
+        }
+
+        input{
+            margin-top: 5px;
+            margin-bottom: 5px;
+            width: 50%;
+        }
+
+        textarea{
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Реєстрація нового законопроекту</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <input class="d-block mx-auto" type="number" name="number" id="number" placeholder="Введіть номер нового законопроекту">
+            </div>
+            <div class="col-12">
+                <input class="d-block mx-auto" type="text" name="title" id="title" placeholder="Введіть назву нового законопроекту">
+            </div>
+            <div class="col-12">
+                <textarea class="d-block mx-auto" name="body" id="body" cols="75" rows="10" placeholder="Введіть текст законопроекту"></textarea>
+            </div>
+            <div class="col-12">
+                <input class="d-block mx-auto" type="text" name="author" id="author" placeholder="Введіть автора законопроекту">
+            </div>
+            <div class="col-12">
+                <input class="d-block mx-auto" type="date" name="date" id="date" placeholder="введіть дату реєстрації законопроекту">
+            </div>
+            <div class="col-12">
+                <input class="d-block mx-auto" type="button" value="Зберегти" id="saver">
+            </div>
+        </div>
+    </div>
+    <p style="text-align: center;" id="output">Test</p>
+    <script src="creator.js"></script>
+</body>
+</html>
