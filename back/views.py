@@ -32,7 +32,7 @@ async def handler_speak(request):
     await check_permission(request, 'speak')
     return web.Response(body="I can speak!")
 
-@aiohttp_jinja2.template('/front/index.html')
+@aiohttp_jinja2.template('/front/counter.html')
 async def index(request):
     await check_permission(request, "vote")
     return {}
