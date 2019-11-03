@@ -42,7 +42,7 @@ async def check_credentials(db, username, password):
         return sha256_crypt.verify(password, hash)
     return False
 
-@aiohttp_jinja2.template('/front/login.html')
+@aiohttp_jinja2.template('/auth/login.html')
 async def handler_login(request):
 
     if request.method == "POST":
@@ -58,7 +58,7 @@ async def handler_login(request):
             body='Invalid username/password combination')
     return {}
 
-@aiohttp_jinja2.template("/front/signin.html")
+@aiohttp_jinja2.template("/auth/signin.html")
 async def handler_signin(request):
     if request.method == "POST":
         redirect_response = web.HTTPFound('/')

@@ -9,7 +9,7 @@ import jinja2
 import datetime
 
 
-@aiohttp_jinja2.template('/front/index.html')
+@aiohttp_jinja2.template('/zrada/index.html')
 async def handler_root(request):
     is_logged = not await is_anonymous(request)
     if is_logged:
@@ -32,12 +32,12 @@ async def handler_speak(request):
     await check_permission(request, 'speak')
     return web.Response(body="I can speak!")
 
-@aiohttp_jinja2.template('/front/counter.html')
+@aiohttp_jinja2.template('/zrada/counter.html')
 async def index(request):
     await check_permission(request, "vote")
     return {}
 
-@aiohttp_jinja2.template("/front/creator.html")
+@aiohttp_jinja2.template("/zrada/creator.html")
 async def insert_law(request):
     await check_permission(request, "admin")
     redirect_response = web.HTTPFound('/')
@@ -64,7 +64,7 @@ async def insert_law(request):
     return {}
 
 
-@aiohttp_jinja2.template("/front/list_of_laws.html")
+@aiohttp_jinja2.template("/zrada/list_of_laws.html")
 async def view_laws(request):
     await check_permission(request, "view")
     db = request.app.db

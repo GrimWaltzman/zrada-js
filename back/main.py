@@ -47,11 +47,12 @@ app = web.Application(middlewares=[middleware,
                                    db_handler])
 
 if DEBUG:
-    app.add_routes([web.static('/static', str(HERE) + "/front/static", show_index=True)])
+    app.add_routes([web.static('/static', str(HERE) + "/front/static", show_index=True),
+                    web.static('/avatars', str(HERE) + "/front/avatars", show_index=True)])
 
 app.client = AsyncIOMotorClient(MONGO_CONNECT)
 app.db = app.client["zrada"]
-aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader(str(HERE)))
+aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader(str(HERE)+"/front/templates"))
 setup_security(app, policy, SimpleJack_AuthorizationPolicy(app.db))
 
 
