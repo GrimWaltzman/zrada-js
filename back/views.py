@@ -9,7 +9,7 @@ import jinja2
 import datetime
 
 
-@aiohttp_jinja2.template('/front/index2.html')
+@aiohttp_jinja2.template('/front/index.html')
 async def handler_root(request):
     is_logged = not await is_anonymous(request)
     if is_logged:
