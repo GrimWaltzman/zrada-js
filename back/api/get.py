@@ -2,6 +2,7 @@ from aiohttp import web
 import bson.json_util
 
 async def laws(request):
+    # TODO: Use Trafaret
     # await check_permission(request, "api")
     try:
         form = await request.json()
@@ -13,5 +14,6 @@ async def laws(request):
     laws = []
     async for law in db["laws"].find().skip(skip).limit(limit):
         laws.append(law)
-    print(laws)
     return web.json_response(laws, dumps=bson.json_util.dumps)
+
+
