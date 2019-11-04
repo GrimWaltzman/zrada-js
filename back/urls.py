@@ -1,5 +1,6 @@
 from views import *
 from auth.views import *
+import api.get
 
 def import_urls(app: web.Application):
     app.add_routes([web.get('/', handler_root, name="index"),
@@ -11,4 +12,6 @@ def import_urls(app: web.Application):
         web.get('/vote', index, name="vote"),
         web.get('/insert_law', insert_law, name="insert_law"),
         web.post('/insert_law', insert_law, name="insert_law"),
-        web.get('/laws', view_laws, name="view_laws")])
+        web.get('/laws', view_laws, name="view_laws"),
+        web.post('/api/laws', api.get.laws, name="api_get_laws"),
+        web.get('/api/laws', api.get.laws, name="api_get_laws")])
