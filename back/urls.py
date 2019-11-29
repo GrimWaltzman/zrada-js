@@ -13,5 +13,11 @@ def import_urls(app: web.Application):
         web.get('/insert_law', insert_law, name="insert_law"),
         web.post('/insert_law', insert_law, name="insert_law"),
         web.get('/laws', view_laws, name="view_laws"),
+        web.get(r'/law/{law}', view_law, name="view_law"),
+
+        web.post('/api/law', api.get.law, name="api_get_law"),
+        web.get('/api/law', api.get.law, name="api_get_law"),
+
         web.post('/api/laws', api.get.laws, name="api_get_laws"),
-        web.get('/api/laws', api.get.laws, name="api_get_laws")])
+        web.get('/api/laws', api.get.laws, name="api_get_laws")
+        ])

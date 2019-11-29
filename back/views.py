@@ -72,3 +72,6 @@ async def view_laws(request):
     async for law in db["laws"].find():
         laws.append(law)
     return {"laws":laws}
+
+async def view_law(request):
+    return {}
