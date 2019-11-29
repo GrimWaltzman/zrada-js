@@ -99,3 +99,21 @@ Response
 }
 ```
 
+POST API
+
+Delete law: url - /api/law_del
+parameters "_id"
+```json
+GET /api/laws
+Body:
+{
+    "_id":"5db9c56edb7bdcb1fe78f8e5"
+}
+```
+
+Response
+200 OK
+```json
+{"result": "OK"}
+```
+

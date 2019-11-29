@@ -50,11 +50,16 @@ async def insert_law(request):
         body = form.get("body")
         author = form.get("author")
         date = form.get("date")
+        number = form.get("number")
+        print(form)
 
         date_in_base = str(datetime.datetime.now())
         editor = session.get("AIOHTTP_SECURITY")
+        print(number)
+        print(type(number))
 
-        await db["laws"].insert_one({"title":title,
+        await db["laws"].insert_one({"number":number,
+                                     "title":title,
                                      "body":body,
                                      "author":author,
                                      "date":date,

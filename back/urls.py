@@ -1,7 +1,8 @@
 from views import *
 from auth.views import *
 import api.get
-
+import api.post
+from aiohttp import web
 def import_urls(app: web.Application):
     app.add_routes([web.get('/', handler_root, name="index"),
         web.get('/login', handler_login, name="login"),
@@ -19,5 +20,7 @@ def import_urls(app: web.Application):
         web.get('/api/law', api.get.law, name="api_get_law"),
 
         web.post('/api/laws', api.get.laws, name="api_get_laws"),
-        web.get('/api/laws', api.get.laws, name="api_get_laws")
+        web.get('/api/laws', api.get.laws, name="api_get_laws"),
+
+        web.post('/api/law_del', api.post.law_del, name="api_del_law"),
         ])

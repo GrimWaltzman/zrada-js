@@ -44,7 +44,7 @@ MONGO_CONNECT = MONGO_TEMPLATE.format(MONGO_PASSWORD)
 middleware = session_middleware(SimpleCookieStorage())
 policy = SessionIdentityPolicy()
 
-exceptions_html = {401: "exceptions/error_404.html"}
+exceptions_html = {401: "exceptions/error_401.html"}
 exceptions = error_factory(exceptions_html)
 
 app = web.Application(middlewares=[middleware,
