@@ -34,7 +34,11 @@ div[data-vote='abstained']{
 }
 
 .info-col{
-    border: 1px solid black;
     padding-bottom: 5px;
     min-width: 285px;
+}
+
+select{
+    margin-bottom: 5px;
+    width: 400px;
 }
