@@ -17,8 +17,8 @@ Example:
 GET /api/laws
 Body:
 {
-    limit:  5,
-    skip:   7
+    "limit":  5,
+    "skip":   7
 }
 ```
 Response
@@ -76,6 +76,8 @@ this skip first 7 laws in DB and returns next 5 (or less, if don`t exist)
 
 default: limit=10, skip=0
 
+limit=0 returns all laws after skipped
+
 Get law: url - /api/law
 parameters "_id"
 ```json
@@ -104,7 +106,7 @@ POST API
 Delete law: url - /api/law_del
 parameters "_id"
 ```json
-GET /api/laws
+POST /api/law_del
 Body:
 {
     "_id":"5db9c56edb7bdcb1fe78f8e5"
@@ -117,3 +119,19 @@ Response
 {"result": "OK"}
 ```
 
+Vote law: url - /api/vote
+parameters "_id"
+```json
+POST /api/vote
+Body:
+{
+  "_id":"5db9c56edb7bdcb1fe78f8e5"
+}
+
+```
+
+Response
+200 OK
+```json
+{"result": "OK"}
+```
