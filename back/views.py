@@ -35,7 +35,11 @@ async def handler_speak(request):
 @aiohttp_jinja2.template('/zrada/counter.html')
 async def index(request):
     await check_permission(request, "vote")
-    return {}
+    db = request.app.db
+    laws = []
+    async for law in db["laws"].find():
+        laws.append(law)
+    return {"laws": laws}
 
 @aiohttp_jinja2.template("/zrada/creator.html")
 async def insert_law(request):

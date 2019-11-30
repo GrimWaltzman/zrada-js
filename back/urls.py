@@ -23,4 +23,5 @@ def import_urls(app: web.Application):
         web.get('/api/laws', api.get.laws, name="api_get_laws"),
 
         web.post('/api/law_del', api.post.law_del, name="api_del_law"),
+        web.post('/api/vote', api.post.vote, name="api_vote"),
         ])
