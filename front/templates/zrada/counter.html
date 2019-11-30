@@ -15,7 +15,7 @@
                     <option value="none" disabled selected>Виберіть номер законопроекту</option>
                     {% for law in laws %}
                         {% if "accepted" not in law %}
-                            <option value="{{ law["_id"] }}">{{law["number"]}} </option>
+                            <option value="{{ law["_id"] }}">{{law["number"]}}: {{law["title"]}} </option>
                         {% endif %}
                     {% endfor %}
                 </select>
