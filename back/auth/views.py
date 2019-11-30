@@ -9,6 +9,7 @@ import aiohttp_jinja2
 import jinja2
 import hashlib
 
+
 class SimpleJack_AuthorizationPolicy(AbstractAuthorizationPolicy):
 
     def __init__(self, db):
@@ -19,6 +20,7 @@ class SimpleJack_AuthorizationPolicy(AbstractAuthorizationPolicy):
         Return the user_id of the user identified by the identity
         or 'None' if no user exists related to the identity.
         """
+        print(identity)
         if identity:
             return await self.collection.find_one({"login": identity})
         return None
@@ -28,10 +30,20 @@ class SimpleJack_AuthorizationPolicy(AbstractAuthorizationPolicy):
         Return True if the identity is allowed the permission
         in the current context, else return False.
         """
-        print(identity)
-        if identity:
-            return await self.collection.find_one({"login": identity})
+        print(context)
+        if type(context) == dict and "token" in context:
+            user = await self.collection.find_one({"token": context["token"]})
+        elif identity:
+            user =  await self.collection.find_one({"login": identity})
+        else: return False
+        print(user)
+        if user:
+            return permission in user["permits"] if "permits" in user else False
+        else:
+            return False
+
         # return identity == 'jack' and permission in ('listen',)
+
 
 async def check_credentials(db, username, password):
 
@@ -67,7 +79,12 @@ async def handler_signin(request):
         login = form.get('login')
         password = form.get('password')
         hash = sha256_crypt.hash(password)
-        await db["users"].insert_one({"login": login, "password": hash})
+        await db["users"].insert_one({
+            "login": login,
+            "password": hash,
+            "permits": [
+                "view"
+            ]})
         raise redirect_response
     return {}
 

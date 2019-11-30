@@ -1,9 +1,10 @@
 from aiohttp import web
 import bson.json_util
+from aiohttp_security import permits
+
 
 async def vote(request):
     # TODO: Use Trafaret
-    # await check_permission(request, "api")
     try:
         form = await request.json()
         law_id = bson.ObjectId(form["_id"])
@@ -11,11 +12,18 @@ async def vote(request):
     except Exception:
         raise web.HTTPBadRequest
 
+    token = {"token": form["token"]} if "token" in form else None
+    allowed = await permits(request, "api", token)
+    if not allowed:
+        raise web.HTTPForbidden()
+
     db = request.app.db
 
-    res = await db["laws"].find_one_and_update({"_id":law_id},
-                                   {"accepted": result})
+    res = await db["laws"].find_one_and_update(
+        {"_id":law_id},
+        {"accepted": result})
     return web.json_response({"result": "OK"}, dumps=bson.json_util.dumps)
+
 
 async def law_del(request):
     try:
@@ -23,6 +31,11 @@ async def law_del(request):
         law_id = bson.ObjectId(form["_id"])
     except Exception:
         raise web.HTTPBadRequest
+
+    token = {"token": form["token"]} if "token" in form else None
+    allowed = await permits(request, "api", token)
+    if not allowed:
+        raise web.HTTPForbidden()
 
     db = request.app.db
 
