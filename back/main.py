@@ -12,15 +12,15 @@ from urls import import_urls
 from motor.motor_asyncio import AsyncIOMotorClient
 from middlewares.custom_exceptions import *
 
-DEBUG = getenv("debug", True)
-if str(DEBUG).lower() == "false":
-    DEBUG = False
-
 # workaround to add secret
 try:
     import secret
 except ImportError:
     pass
+
+DEBUG = getenv("debug", True)
+if str(DEBUG).lower() == "false":
+    DEBUG = False
 
 loop = asyncio.get_event_loop()
 
