@@ -15,11 +15,17 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from middlewares.custom_exceptions import *
 import aioredis
 
-DEBUG = getenv("debug", True)
-if str(DEBUG).lower() == "false":
+# workaround to add secret
+try:
+    import secret
+except ImportError:
+    pass
+
+DEBUG = getenv("CZVLT_DEBUG", "False")
+if DEBUG.lower() == "true":
+    DEBUG = True
+else: # if non "true" value e.g. "false" or bogus string 
     DEBUG = False
-
-
 
 loop = asyncio.get_event_loop()
 
@@ -77,7 +83,7 @@ if DEBUG:
 import_urls(app)    # Installing routes
 
 
-
+# TODO: refactor this!
 async def finalize(app):
     await shutdown(app)
 
@@ -92,8 +98,6 @@ async def shutdown(app):
 
 
 try:
-
-
     web.run_app(app, port=1488)
 
 finally:
