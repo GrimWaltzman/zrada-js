@@ -1,21 +1,18 @@
-import asyncio
-import aiohttp
 import aiohttp_jinja2
-import jinja2
 from aiohttp import web
-import random
 
 
 def error_html(template, request, context={}, status_code=200):
     return aiohttp_jinja2.render_template(template, request, context, status=status_code)
 
+
 def error_json(message, status_code=200):
     return web.json_response({"error": True,"message": message}, status=status_code)
 
 
-
 def error_factory(templates: dict):
     templates = templates
+
     async def error_middleware(app, handler):
         async def middleware_handler(request):
             if request.path.startswith('/api/'):

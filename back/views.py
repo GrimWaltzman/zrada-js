@@ -1,11 +1,10 @@
-from aiohttp import web
-from aiohttp_session import get_session
-from aiohttp_security import check_permission, \
-    is_anonymous, remember, forget, \
-    setup as setup_security, SessionIdentityPolicy
-import aiohttp_jinja2
-import jinja2
 import datetime
+
+import aiohttp_jinja2
+from aiohttp import web
+from aiohttp_security import check_permission, \
+    is_anonymous
+from aiohttp_session import get_session
 
 
 @aiohttp_jinja2.template('/zrada/index.html')
@@ -70,5 +69,9 @@ async def view_laws(request):
         laws.append(law)
     return {"laws":laws}
 
+
+# TODO: return law
+# request {"id" : id}
+# response {"id" : id, "title : title, .. and etc}
 async def view_law(request):
-    return {}
+    raise web.HTTPNotImplemented

@@ -1,5 +1,5 @@
-from aiohttp import web
 import bson.json_util
+from aiohttp import web
 from aiohttp_security import permits
 
 

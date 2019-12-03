@@ -1,13 +1,9 @@
+import aiohttp_jinja2
 from aiohttp import web
-from aiohttp_security import check_permission, \
-    is_anonymous, remember, forget, \
-    setup as setup_security, SessionIdentityPolicy, \
+from aiohttp_security import remember, forget, \
     check_authorized
 from aiohttp_security.abc import AbstractAuthorizationPolicy
 from passlib.hash import sha256_crypt
-import aiohttp_jinja2
-import jinja2
-import hashlib
 
 
 class SimpleJack_AuthorizationPolicy(AbstractAuthorizationPolicy):
@@ -38,6 +34,7 @@ class SimpleJack_AuthorizationPolicy(AbstractAuthorizationPolicy):
         else: return False
         print(user)
         if user:
+            # TODO: delete legacy   ' "permits" in user  '
             return permission in user["permits"] if "permits" in user else False
         else:
             return False
@@ -50,14 +47,15 @@ async def check_credentials(db, username, password):
     user = await db["users"].find_one({"login": username})
 
     if user is not None and user["password"]:
-        hash = user["password"]
-        return sha256_crypt.verify(password, hash)
+        secret = user["password"]
+        return sha256_crypt.verify(password, secret)
     return False
 
 @aiohttp_jinja2.template('/auth/login.html')
 async def handler_login(request):
 
     if request.method == "POST":
+
         redirect_response = web.HTTPFound('/')
         form = await request.post()
         login = form.get('login')

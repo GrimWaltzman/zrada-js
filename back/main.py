@@ -1,11 +1,11 @@
 from os import getenv
+from os import environ
 from aiohttp import web
 import aiohttp
 import asyncio
 import aiohttp_jinja2
 import jinja2
-from aiohttp_session import SimpleCookieStorage, session_middleware, setup as setup_session
-from aiohttp_session.cookie_storage import EncryptedCookieStorage
+from aiohttp_session import setup as setup_session
 from aiohttp_session.redis_storage import RedisStorage
 from aiohttp_security import setup as setup_security, SessionIdentityPolicy
 from auth.views import SimpleJack_AuthorizationPolicy
@@ -23,6 +23,14 @@ if str(DEBUG).lower() == "false":
 
 loop = asyncio.get_event_loop()
 
+
+
+HERE = Path(__file__).resolve().parent.parent   # Path app
+MONGO_TEMPLATE = "mongodb+srv://admin:{}@quppeq0-qnmoc.mongodb.net/test?retryWrites=true&w=majority"
+MONGO_PASSWORD = getenv("MONGO_PASS", "B24v2PLoWJSRcHsc")
+MONGO_CONNECT = MONGO_TEMPLATE.format(MONGO_PASSWORD)
+
+
 async def db_handler(app, handler):
     async def middleware(request):
         if request.path.startswith('/static/') or request.path.startswith('/_debugtoolbar'):
@@ -39,18 +47,7 @@ async def make_redis_pool():
     redis_address = ('redis', '6379')
     return await aioredis.create_redis_pool(redis_address, timeout=1)
 
-HERE = Path(__file__).resolve().parent.parent   # Path app
-MONGO_TEMPLATE = "mongodb+srv://admin:{}@quppeq0-qnmoc.mongodb.net/test?retryWrites=true&w=majority"
-MONGO_PASSWORD = getenv("MONGO_PASS", "B24v2PLoWJSRcHsc")
-MONGO_CONNECT = MONGO_TEMPLATE.format(MONGO_PASSWORD)
 
-
-COOKIE_KEY = getenv("COOKIE_KEY" ,"pidarasi_kuki_vkrali")
-
-
-
-
-# middleware = session_middleware(EncryptedCookieStorage(COOKIE_KEY))
 policy = SessionIdentityPolicy()
 
 exceptions_html = {401: "exceptions/error_401.html"}
