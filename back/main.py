@@ -18,8 +18,10 @@ try:
 except ImportError:
     pass
 
-DEBUG = getenv("debug", True)
-if str(DEBUG).lower() == "false":
+DEBUG = getenv("CZVLT_DEBUG", "False")
+if DEBUG.lower() == "true":
+    DEBUG = True
+else: # if non "true" value e.g. "false" or bogus string 
     DEBUG = False
 
 loop = asyncio.get_event_loop()
