@@ -16,7 +16,11 @@ DEBUG = getenv("debug", True)
 if str(DEBUG).lower() == "false":
     DEBUG = False
 
-
+# workaround to add secret
+try:
+    import secret
+except ImportError:
+    pass
 
 loop = asyncio.get_event_loop()
 
@@ -36,8 +40,7 @@ MONGO_TEMPLATE = "mongodb+srv://admin:{}@quppeq0-qnmoc.mongodb.net/test?retryWri
 MONGO_PASSWORD = getenv("MONGO_PASS", "B24v2PLoWJSRcHsc")
 MONGO_CONNECT = MONGO_TEMPLATE.format(MONGO_PASSWORD)
 
-
-
+print(MONGO_PASSWORD)
 
 
 
