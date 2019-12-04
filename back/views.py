@@ -5,6 +5,9 @@ from aiohttp import web
 from aiohttp_security import check_permission, \
     is_anonymous
 from aiohttp_session import get_session
+import logging
+
+logger = logging.getLogger("views")
 
 
 @aiohttp_jinja2.template('/zrada/index.html')
@@ -41,13 +44,12 @@ async def insert_law(request):
         body = form.get("body")
         author = form.get("author")
         date = form.get("date")
-        number = form.get("number")
-        print(form)
+        number = await db["laws"].find_one(sort=[('_id', -1)])  # find law with max number
+        number = number["number"] + 1   # increment number
+
 
         date_in_base = str(datetime.datetime.now())
         editor = session.get("AIOHTTP_SECURITY")
-        print(number)
-        print(type(number))
 
         await db["laws"].insert_one({"number":number,
                                      "title":title,
