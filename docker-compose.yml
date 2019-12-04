@@ -12,7 +12,7 @@ services:
     ports:
       - 1488:1488
     networks:
-      - sessionпше
+      - session
   redis:
     image: bitnami/redis:latest
     environment:
