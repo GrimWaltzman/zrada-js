@@ -45,8 +45,11 @@ async def insert_law(request):
         author = form.get("author")
         date = form.get("date")
         number = await db["laws"].find_one(sort=[('_id', -1)])  # find law with max number
-        number = number["number"] + 1   # increment number
 
+        if number and "number" in number:
+            number = number["number"] + 1   # increment number
+        else:
+            number = 1
 
         date_in_base = str(datetime.datetime.now())
         editor = session.get("AIOHTTP_SECURITY")
