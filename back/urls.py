@@ -6,17 +6,18 @@ from aiohttp import web
 
 
 def import_urls(app: web.Application):
-    app.add_routes([web.get('/', handler_root, name="index"),
+    app.add_routes([
+        web.get('/', handler_root, name="index"),
         web.get('/login', handler_login, name="login"),
         web.post('/login', handler_login, name="login"),
-        web.get('/signin', handler_signup, name="signin"),
-        web.post('/signin', handler_signup, name="signin"),
+        web.get('/signup', handler_signup, name="signup"),
+        web.post('/signup', handler_signup, name="signup"),
         web.get('/logout', handler_logout, name="logout"),
         web.get('/vote', index, name="vote"),
         web.get('/insert_law', insert_law, name="insert_law"),
         web.post('/insert_law', insert_law, name="insert_law"),
         web.get('/laws', view_laws, name="view_laws"),
-        web.get(r'/law/{law}', view_law, name="view_law"),
+        web.get(r'/law/{law}', view_law, name="view_law"), # Todo: implement this
 
         web.post('/api/law', api.get.law, name="api_get_law"),
         web.get('/api/law', api.get.law, name="api_get_law"),
