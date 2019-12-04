@@ -58,7 +58,7 @@ async def insert_law(request):
                                      "date_in_base":date_in_base,
                                      "editor":editor})
         raise web.HTTPOk(body="Законопроект успішно внесено в базу!")
-    raise web.HTTPMethodNotAllowed
+    return {}
 
 
 @aiohttp_jinja2.template("/zrada/list_of_laws.html")
@@ -75,4 +75,4 @@ async def view_laws(request):
 # request {"id" : id}
 # response {"id" : id, "title : title, .. and etc}
 async def view_law(request):
-    raise web.HTTPNotImplemented
+    raise web.HTTPNotImplemented()

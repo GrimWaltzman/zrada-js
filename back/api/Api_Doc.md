@@ -14,7 +14,7 @@ parameters "limit", "skip"
 Example:
 
 ```json
-GET /api/laws
+POST /api/laws
 Body:
 {
     "limit":  5,
@@ -81,7 +81,7 @@ limit=0 returns all laws after skipped
 Get law: url - /api/law
 parameters "_id"
 ```json
-GET /api/laws
+POST /api/law
 Body:
 {
     "_id":"5db9c56edb7bdcb1fe78f8e5"

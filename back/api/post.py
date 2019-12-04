@@ -1,5 +1,9 @@
 from aiohttp import web
 import bson.json_util
+import logging
+
+logger = logging.getLogger("api_post")
+
 
 async def vote(request):
     # TODO: Use Trafaret
@@ -13,9 +17,13 @@ async def vote(request):
 
     db = request.app.db
 
-    res = await db["laws"].find_one_and_update({"_id":law_id},
-                                   {"accepted": result})
+    res = await db["laws"].find_one_and_update(
+        {"_id": law_id},
+        {"$set": {"accepted": result}})
+    logger.info(f"Law with id: {law_id} change status to: {res['accepted']}")
+
     return web.json_response({"result": "OK"}, dumps=bson.json_util.dumps)
+
 
 async def law_del(request):
     try:
@@ -27,4 +35,5 @@ async def law_del(request):
     db = request.app.db
 
     res = await db["laws"].delete_one({"_id": law_id})
+    logger.info(f"delete vote: {law_id}")
     return web.json_response({"result": "OK"}, dumps=bson.json_util.dumps)

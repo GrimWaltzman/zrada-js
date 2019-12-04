@@ -9,9 +9,9 @@ import random
 def error_html(template, request, context={}, status_code=200):
     return aiohttp_jinja2.render_template(template, request, context, status=status_code)
 
+
 def error_json(message, status_code=200):
     return web.json_response({"error": True,"message": message}, status=status_code)
-
 
 
 def error_factory(templates: dict):

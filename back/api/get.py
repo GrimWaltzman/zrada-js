@@ -8,7 +8,7 @@ async def laws(request):
     try:
         form = await request.json()
     except:
-        form = {}
+        raise web.HTTPBadRequest()
     limit = form["limit"] if "limit" in form else 10
     skip = form["skip"] if "skip" in form else 0
     db = request.app.db

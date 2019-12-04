@@ -8,6 +8,11 @@ from passlib.hash import sha256_crypt
 import aiohttp_jinja2
 import jinja2
 import hashlib
+import logging
+
+
+logger = logging.getLogger("auth")
+
 
 class SimpleJack_AuthorizationPolicy(AbstractAuthorizationPolicy):
 
@@ -33,6 +38,7 @@ class SimpleJack_AuthorizationPolicy(AbstractAuthorizationPolicy):
             return await self.collection.find_one({"login": identity})
         # return identity == 'jack' and permission in ('listen',)
 
+
 async def check_credentials(db, username, password):
 
     user = await db["users"].find_one({"login": username})
@@ -41,6 +47,7 @@ async def check_credentials(db, username, password):
         hash = user["password"]
         return sha256_crypt.verify(password, hash)
     return False
+
 
 @aiohttp_jinja2.template('/auth/login.html')
 async def handler_login(request):
@@ -53,13 +60,15 @@ async def handler_login(request):
         db_engine = request.app.db
         if await check_credentials(db_engine, login, password):
             await remember(request, redirect_response, login)
+            logger.info(f"create new session, user: {login}")
             raise redirect_response
         raise web.HTTPUnauthorized(
             body='Invalid username/password combination')
     return {}
 
-@aiohttp_jinja2.template("/auth/signin.html")
-async def handler_signin(request):
+
+@aiohttp_jinja2.template("/auth/signup.html")
+async def handler_signup(request):
     if request.method == "POST":
         redirect_response = web.HTTPFound('/')
         form = await request.post()
@@ -67,11 +76,10 @@ async def handler_signin(request):
         login = form.get('login')
         password = form.get('password')
         hash = sha256_crypt.hash(password)
+        logger.info(f"create new user: {login}")
         await db["users"].insert_one({"login": login, "password": hash})
         raise redirect_response
     return {}
-
-
 
 
 async def handler_logout(request):
