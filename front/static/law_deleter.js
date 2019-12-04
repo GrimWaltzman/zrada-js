@@ -7,8 +7,8 @@ var main = document.getElementById('main');
   function deleter(id){
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "" , true); //кинеш куди тобі треба
-    xhr.setRequestHeader('Content-Type', 'text/plain' );
+    xhr.open("POST", "/api/law_del" , true); //кинеш куди тобі треба
+    xhr.setRequestHeader('Content-Type', 'application/json' );
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
@@ -17,5 +17,8 @@ var main = document.getElementById('main');
             }
         }
     };
-    xhr.send(id);
+    post = new Object;
+    post._id = id;
+    post_json = JSON.stringify(post);
+    xhr.send(post_json);
 }
