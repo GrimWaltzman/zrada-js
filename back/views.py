@@ -29,6 +29,7 @@ async def index(request):
         laws.append(law)
     return {"laws": laws}
 
+
 @aiohttp_jinja2.template("/zrada/creator.html")
 async def insert_law(request):
     await check_permission(request, "admin")
