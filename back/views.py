@@ -20,18 +20,6 @@ async def handler_root(request):
     return {"login": mail}
 
 
-
-
-
-async def handler_listen(request):
-    await check_permission(request, 'listen')
-    return web.Response(body="I can listen!")
-
-
-async def handler_speak(request):
-    await check_permission(request, 'speak')
-    return web.Response(body="I can speak!")
-
 @aiohttp_jinja2.template('/zrada/counter.html')
 async def index(request):
     await check_permission(request, "vote")
@@ -70,7 +58,7 @@ async def insert_law(request):
                                      "date_in_base":date_in_base,
                                      "editor":editor})
         raise web.HTTPOk(body="Законопроект успішно внесено в базу!")
-    return {}
+    raise web.HTTPMethodNotAllowed
 
 
 @aiohttp_jinja2.template("/zrada/list_of_laws.html")
@@ -82,5 +70,9 @@ async def view_laws(request):
         laws.append(law)
     return {"laws":laws}
 
+
+# TODO: return law
+# request {"id" : id}
+# response {"id" : id, "title : title, .. and etc}
 async def view_law(request):
-    return {}
+    raise web.HTTPNotImplemented

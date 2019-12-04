@@ -11,7 +11,7 @@ from pathlib import Path
 from urls import import_urls
 from motor.motor_asyncio import AsyncIOMotorClient
 from middlewares.custom_exceptions import *
-
+from middlewares.db import *
 # workaround to add secret
 try:
     import secret
@@ -26,24 +26,11 @@ else: # if non "true" value e.g. "false" or bogus string
 
 loop = asyncio.get_event_loop()
 
-async def db_handler(app, handler):
-    async def middleware(request):
-        if request.path.startswith('/static/') or request.path.startswith('/_debugtoolbar'):
-            response = await handler(request)
-            return response
-
-        request.db = app.db
-        response = await handler(request)
-        return response
-    return middleware
 
 HERE = Path(__file__).resolve().parent.parent   # Path app
 MONGO_TEMPLATE = "mongodb+srv://admin:{}@quppeq0-qnmoc.mongodb.net/test?retryWrites=true&w=majority"
 MONGO_PASSWORD = getenv("MONGO_PASS", "B24v2PLoWJSRcHsc")
 MONGO_CONNECT = MONGO_TEMPLATE.format(MONGO_PASSWORD)
-
-#print(MONGO_PASSWORD)
-
 
 
 middleware = session_middleware(SimpleCookieStorage())
@@ -66,17 +53,13 @@ if DEBUG:
                     web.static('/avatars', str(HERE) + "/front/avatars", show_index=True)])
 
 
-
-
 import_urls(app)    # Installing routes
 
 
-
-
-async def shutdown(app):
+async def shutdown(app: web.Application):
     print("END")
 
-    await app.client.close()  # database connection close
+    app.client.close()  # database connection close
     await app.shutdown()
     await app.cleanup()
 
@@ -86,5 +69,5 @@ try:
 
 finally:
     print("stopped")
-    # loop.create_task(shutdown(app))
+    asyncio.run(shutdown(app))
     loop.close()
