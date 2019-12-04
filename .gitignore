@@ -4,3 +4,4 @@
 /testenv
 /.vs
 /back/secret.py
+**/*.log

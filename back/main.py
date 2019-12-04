@@ -71,8 +71,6 @@ import_urls(app)    # Installing routes
 
 
 async def shutdown(app: web.Application):
-    print("END")
-
     app.client.close()  # database connection close
     await app.shutdown()
     await app.cleanup()
@@ -86,3 +84,4 @@ finally:
     logger.info("Stopped server")
     asyncio.run(shutdown(app))
     loop.close()
+    logger.info("Graceful shutdown compete")
