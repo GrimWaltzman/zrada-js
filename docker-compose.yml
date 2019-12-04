@@ -1,4 +1,5 @@
 version: '2'
+
 services:
   app:
     build:
@@ -6,3 +7,19 @@ services:
       dockerfile: Dockerfile
     ports:
       - 1488:1488
+    networks:
+      - session
+  redis:
+    image: bitnami/redis:latest
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 6739:6739
+    volumes:
+      - /Users/quppeq/redis-persistence:/bitnami/redis/data
+    networks:
+      - session
+networks:
+  session:
+    driver: bridge
+

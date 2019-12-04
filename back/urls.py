@@ -1,8 +1,8 @@
-from views import *
-from auth.views import *
 import api.get
 import api.post
 from aiohttp import web
+from auth.views import *
+from views import *
 
 
 def import_urls(app: web.Application):

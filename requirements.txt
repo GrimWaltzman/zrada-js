@@ -5,5 +5,8 @@ aiohttp_jinja2
 
 jinja2
 motor
+aioredis
+
 dnspython
 passlib
+cryptography

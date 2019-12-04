@@ -1,7 +1,6 @@
+import aiohttp_jinja2
 from aiohttp import web
-from aiohttp_security import check_permission, \
-    is_anonymous, remember, forget, \
-    setup as setup_security, SessionIdentityPolicy, \
+from aiohttp_security import remember, forget, \
     check_authorized
 from aiohttp_security.abc import AbstractAuthorizationPolicy
 from passlib.hash import sha256_crypt
@@ -14,6 +13,7 @@ import logging
 logger = logging.getLogger("auth")
 
 
+
 class SimpleJack_AuthorizationPolicy(AbstractAuthorizationPolicy):
 
     def __init__(self, db):
@@ -24,6 +24,7 @@ class SimpleJack_AuthorizationPolicy(AbstractAuthorizationPolicy):
         Return the user_id of the user identified by the identity
         or 'None' if no user exists related to the identity.
         """
+        print(identity)
         if identity:
             return await self.collection.find_one({"login": identity})
         return None
@@ -33,9 +34,19 @@ class SimpleJack_AuthorizationPolicy(AbstractAuthorizationPolicy):
         Return True if the identity is allowed the permission
         in the current context, else return False.
         """
-        print(identity)
-        if identity:
-            return await self.collection.find_one({"login": identity})
+        print(context)
+        if type(context) == dict and "token" in context:
+            user = await self.collection.find_one({"token": context["token"]})
+        elif identity:
+            user =  await self.collection.find_one({"login": identity})
+        else: return False
+        print(user)
+        if user:
+            # TODO: delete legacy   ' "permits" in user  '
+            return permission in user["permits"] if "permits" in user else False
+        else:
+            return False
+
         # return identity == 'jack' and permission in ('listen',)
 
 
@@ -44,8 +55,8 @@ async def check_credentials(db, username, password):
     user = await db["users"].find_one({"login": username})
 
     if user is not None and user["password"]:
-        hash = user["password"]
-        return sha256_crypt.verify(password, hash)
+        secret = user["password"]
+        return sha256_crypt.verify(password, secret)
     return False
 
 
@@ -53,6 +64,7 @@ async def check_credentials(db, username, password):
 async def handler_login(request):
 
     if request.method == "POST":
+
         redirect_response = web.HTTPFound('/')
         form = await request.post()
         login = form.get('login')
@@ -77,7 +89,13 @@ async def handler_signup(request):
         password = form.get('password')
         hash = sha256_crypt.hash(password)
         logger.info(f"create new user: {login}")
-        await db["users"].insert_one({"login": login, "password": hash})
+
+        await db["users"].insert_one({
+            "login": login,
+            "password": hash,
+            "permits": [
+                "view"
+            ]})
         raise redirect_response
     return {}
 
