@@ -29,7 +29,7 @@ logger = logging.getLogger("main")
 async def make_redis_pool():
     redis_address = ('redis', '6379')
     logger.info("Connect to redis")
-    return await aioredis.create_redis_pool(redis_address, timeout=1)
+    return await aioredis.create_redis_pool(redis_address, timeout=1, password=getenv("REDIS_PASSWORD"))
 
 DEBUG = getenv("CZVLT_DEBUG", "False")
 
@@ -90,7 +90,6 @@ async def shutdown(app: web.Application):
 try:
     logger.info("Run server")
     web.run_app(app, port=1488)
-
 finally:
     logger.info("Stopped server")
     asyncio.run(shutdown(app))

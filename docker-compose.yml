@@ -5,18 +5,24 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
     ports:
       - 1488:1488
     networks:
-      - session
+      - sessionпше
   redis:
     image: bitnami/redis:latest
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    env_file:
+      - .env
     ports:
       - 6739:6739
     volumes:
-      - /Users/quppeq/redis-persistence:/bitnami/redis/data
+      - ${REDIS_HOME}:/bitnami/redis/data
     networks:
       - session
 networks:
