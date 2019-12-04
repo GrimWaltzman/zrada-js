@@ -6,3 +6,4 @@
 /back/secret.py
 **/*.log
 **/*.env
+/redis

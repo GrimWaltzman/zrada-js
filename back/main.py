@@ -18,11 +18,7 @@ import logging
 import sys
 import aioredis
 
-# workaround to add secret
-try:
-    import secret
-except ImportError:
-    pass
+
 loop = asyncio.get_event_loop()
 logger = logging.getLogger("main")
 
