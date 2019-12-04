@@ -5,3 +5,4 @@
 /.vs
 /back/secret.py
 **/*.log
+**/*.env
