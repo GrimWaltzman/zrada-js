@@ -17,10 +17,11 @@ def import_urls(app: web.Application):
         web.get('/insert_law', insert_law, name="insert_law"),
         web.post('/insert_law', insert_law, name="insert_law"),
         web.get('/laws', view_laws, name="view_laws"),
-        web.get(r'/law/{law}', view_law, name="view_law"),  # Todo: implement this
+        web.get(r'/law/{law}', view_law, name="view_law"),
 
         web.post('/api/law', api.get.law, name="api_get_law"),
         web.post('/api/laws', api.get.laws, name="api_get_laws"),
         web.post('/api/law_del', api.post.law_del, name="api_del_law"),
         web.post('/api/vote', api.post.vote, name="api_vote"),
+        web.post('/api/add_version', api.post.add_version, name="api_add_version")
         ])

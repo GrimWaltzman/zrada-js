@@ -34,7 +34,7 @@ class SimpleJack_AuthorizationPolicy(AbstractAuthorizationPolicy):
         Return True if the identity is allowed the permission
         in the current context, else return False.
         """
-        logger.debug(context)
+        logger.debug(str(identity) + str(permission) + str(context))
         if type(context) == dict and "token" in context:
             user = await self.collection.find_one({"token": context["token"]})
         elif identity:
@@ -42,8 +42,9 @@ class SimpleJack_AuthorizationPolicy(AbstractAuthorizationPolicy):
         else: return False
         logger.debug(user)
         if user:
-            # TODO: delete legacy   ' "permits" in user  '
-            return permission in user["permits"] if "permits" in user else False
+            if "permits" in user:
+                if "admin" in user["permits"] or permission in user["permits"]:
+                    return True
         else:
             return False
 
@@ -58,6 +59,11 @@ async def check_credentials(db, username, password):
         secret = user["password"]
         return sha256_crypt.verify(password, secret)
     return False
+
+async def token_user(db, token: str) -> dict:
+    user = await db["users"].find_one({"token": token})
+    logger.debug("token user: ", user)
+    return user
 
 
 @aiohttp_jinja2.template('/auth/login.html')

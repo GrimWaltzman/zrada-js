@@ -87,5 +87,17 @@ async def view_laws(request):
 # TODO: return law
 # request {"id" : id}
 # response {"id" : id, "title : title, .. and etc}
+@aiohttp_jinja2.template("/zrada/law.html")
 async def view_law(request):
-    raise web.HTTPNotImplemented()
+    await check_permission(request, "view")
+    db = request.app.db
+    law_number = request.match_info['law']
+    logger.debug(law_number)
+    try:
+        law_number = int(law_number)
+    except ValueError:
+        raise web.HTTPBadRequest()
+    law = await db["laws"].find_one({"number": law_number})
+    if law:
+        return {"law":law}
+    raise web.HTTPNotFound()
