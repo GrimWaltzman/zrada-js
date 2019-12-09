@@ -26,13 +26,18 @@
     <div class="row">
         <div class="col">
                 {% for law in laws %}
-                <h1>{{law["title"]}}</h1> 
-            <ol>
-                <li><h6>{{law["body"]}}</h6></li>
-                <li><h6>{{law["number"]}}</h6></li>
-                <li><h6>Автор - {{law["author"]}}</h6></li>
-                <li><h6>Дата подання - {{law["date"]}}</h6></li>
-            </ol>
+                <h1>{{law["number"]}} : {{law["title"]}}</h1>
+
+            {% for version in law["versions"] %}
+                <ol>
+                    <li><h6>{{version["version"]}}</h6></li>
+                    <li><h6>{{version["body"]}}</h6></li>
+                    <li><h6>Автор - {{version["author"]}}</h6></li>
+                    <li><h6>Дата редакції - {{version["date_in_base"]}}</h6></li>
+                </ol>
+            {% endfor %}
+            <li><h5>Дата подання - {{law["date_in_base"]}}</h5></li>
+            <li><h5>Автор - {{law["author"]}}</h5></li>
             <button data-id='{{law["_id"]}}'>Видалити закон</button>
             {% endfor %}
         </div>

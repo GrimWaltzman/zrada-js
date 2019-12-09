@@ -43,7 +43,6 @@ async def insert_law(request):
         title = form.get("title")
         body = form.get("body")
         author = form.get("author")
-        date = form.get("date")
 
         if not (title and body and author):
             logger.debug("law without fields")
@@ -57,15 +56,20 @@ async def insert_law(request):
             number = 1
 
         date_in_base = str(datetime.datetime.now())
-        editor = session.get("AIOHTTP_SECURITY")
+        poster = session.get("AIOHTTP_SECURITY")
 
-        await db["laws"].insert_one({"number":number,
-                                     "title":title,
-                                     "body":body,
-                                     "author":author,
-                                     "date":date,
-                                     "date_in_base":date_in_base,
-                                     "editor":editor})
+        # New law, with one version
+        await db["laws"].insert_one({"number": number,
+                                     "title": title,
+                                     "versions": [
+                                         {"version": 1,
+                                          "body": body,
+                                          "date_in_base":date_in_base,
+                                          "author": author,
+                                          "poster": poster}],
+                                     "author": author,
+                                     "date_in_base": date_in_base,
+                                     "poster": poster})
         raise web.HTTPOk(body="Законопроект успішно внесено в базу!")
     return {}
 
