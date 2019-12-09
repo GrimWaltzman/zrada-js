@@ -44,6 +44,11 @@ async def insert_law(request):
         body = form.get("body")
         author = form.get("author")
         date = form.get("date")
+
+        if not (title and body and author):
+            logger.debug("law without fields")
+            raise web.HTTPBadRequest()
+
         number = await db["laws"].find_one(sort=[('_id', -1)])  # find law with max number
 
         if number and "number" in number:
