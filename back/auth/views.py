@@ -24,7 +24,7 @@ class SimpleJack_AuthorizationPolicy(AbstractAuthorizationPolicy):
         Return the user_id of the user identified by the identity
         or 'None' if no user exists related to the identity.
         """
-        print(identity)
+        logger.debug(identity)
         if identity:
             return await self.collection.find_one({"login": identity})
         return None
@@ -34,13 +34,13 @@ class SimpleJack_AuthorizationPolicy(AbstractAuthorizationPolicy):
         Return True if the identity is allowed the permission
         in the current context, else return False.
         """
-        print(context)
+        logger.debug(context)
         if type(context) == dict and "token" in context:
             user = await self.collection.find_one({"token": context["token"]})
         elif identity:
             user =  await self.collection.find_one({"login": identity})
         else: return False
-        print(user)
+        logger.debug(user)
         if user:
             # TODO: delete legacy   ' "permits" in user  '
             return permission in user["permits"] if "permits" in user else False
